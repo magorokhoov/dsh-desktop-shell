@@ -13,6 +13,7 @@ const { existsSync, readFileSync, readdirSync, realpathSync, statSync, writeFile
 const net = require('node:net')
 const os = require('node:os')
 const path = require('node:path')
+const { installZoom, ZOOM_MAX, ZOOM_MIN } = require('./zoom')
 
 const HOST = '127.0.0.1'
 const PORT = 3080
@@ -20,9 +21,6 @@ const START_TIMEOUT_MS = 90_000
 const HOST_LINE = /dsh web:\s+(\S+)/
 const APP_NAME = 'DeepSeek Harness'
 const ZOOM_FILE = 'zoom.json'
-const ZOOM_STEP = 0.5
-const ZOOM_MIN = -5
-const ZOOM_MAX = 5
 
 let hostProcess = null
 let mainWindow = null
@@ -210,21 +208,7 @@ function createWindow(url) {
   })
   mainWindow.setMenuBarVisibility(false)
 
-  let zoomLevel = readZoomLevel()
-  const applyZoom = () => { mainWindow?.webContents.setZoomLevel(zoomLevel) }
-  mainWindow.webContents.on('did-finish-load', applyZoom)
-  mainWindow.webContents.on('before-input-event', (event, input) => {
-    if (input.type !== 'keyDown' || input.control !== true || input.alt === true || input.meta === true) return
-    let next
-    if (input.key === '=' || input.key === '+' || input.key === 'Add') next = zoomLevel + ZOOM_STEP
-    else if (input.key === '-' || input.key === '_' || input.key === 'Subtract') next = zoomLevel - ZOOM_STEP
-    else if (input.key === '0') next = 0
-    else return
-    event.preventDefault()
-    zoomLevel = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, next))
-    event.sender.setZoomLevel(zoomLevel)
-    saveZoomLevel(zoomLevel)
-  })
+  installZoom(mainWindow.webContents, { read: readZoomLevel, save: saveZoomLevel })
 
   mainWindow.loadURL(url)
   mainWindow.once('ready-to-show', () => { mainWindow.show() })

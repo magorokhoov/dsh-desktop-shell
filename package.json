@@ -1,6 +1,6 @@
 {
   "name": "dsh-desktop-shell",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "Native window for the locally installed DeepSeek Harness web GUI",
   "author": "local",
@@ -8,7 +8,8 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --linux AppImage"
+    "dist": "electron-builder --linux AppImage",
+    "test:zoom": "electron tests/zoom-smoke.js"
   },
   "devDependencies": {
     "electron": "45.0.0",

@@ -62,6 +62,15 @@ npx electron-builder --linux AppImage
 The result lands in `dist/`. On CI, pushes to a `v*` tag build the AppImage and attach it
 to a GitHub release (`.github/workflows/release.yml`).
 
+## Test
+
+```bash
+npm run test:zoom
+```
+
+Runs an Electron smoke test that synthesizes `Ctrl+=`, `Ctrl+-` and `Ctrl+0` on a data URL
+and asserts the resulting zoom levels.
+
 ## How it works
 
 1. `app.whenReady()` checks that port 3080 is free.
