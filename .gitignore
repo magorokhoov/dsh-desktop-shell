@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.home/
+.cache/
+.download/
+.npm-cache/
+.userdata/
+*.log

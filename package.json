@@ -1,0 +1,41 @@
+{
+  "name": "dsh-desktop-shell",
+  "version": "0.1.1",
+  "private": true,
+  "description": "Native window for the locally installed DeepSeek Harness web GUI",
+  "author": "local",
+  "license": "MIT",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --linux AppImage"
+  },
+  "devDependencies": {
+    "electron": "45.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "io.github.dsh-desktop-shell",
+    "productName": "DeepSeek Harness",
+    "artifactName": "DeepSeekHarness-${version}.${ext}",
+    "files": [
+      "src/**/*",
+      "build/icon.png",
+      "package.json"
+    ],
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Development",
+      "icon": "build/icon.png"
+    }
+  },
+  "keywords": [
+    "deepseek",
+    "harness",
+    "electron",
+    "appimage",
+    "desktop"
+  ]
+}
